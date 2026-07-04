@@ -1,0 +1,14 @@
+{
+  "name": "sentinelx-blockchain",
+  "version": "1.0.0",
+  "description": "LogIntegrity smart contract compiling and deployment suite",
+  "main": "hardhat.config.js",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.js --network ganache"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.1"
+  }
+}

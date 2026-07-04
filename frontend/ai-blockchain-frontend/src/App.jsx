@@ -1,938 +1,301 @@
-import { useState, useEffect, useRef } from "react";
-
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
-
-function App() {
-
-  const [time, setTime] = useState(
-    new Date().toLocaleTimeString()
-  );
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-const dashboardRef = useRef(null);
-const threatsRef = useRef(null);
-const blockchainRef = useRef(null);
-const reportsRef = useRef(null);
-
-const scrollToSection = (ref) => {
-  ref.current?.scrollIntoView({
-    behavior: "smooth",
-  });
-};
-
-  const pieData = [
-    { name: "Phishing", value: 40 },
-    { name: "Malware", value: 30 },
-    { name: "DDoS", value: 20 },
-    { name: "Others", value: 10 },
-  ];
-
-  const barData = [
-    { day: "Mon", attacks: 12 },
-    { day: "Tue", attacks: 19 },
-    { day: "Wed", attacks: 15 },
-    { day: "Thu", attacks: 28 },
-    { day: "Fri", attacks: 22 },
-    { day: "Sat", attacks: 31 },
-    { day: "Sun", attacks: 18 },
-  ];
-
-  const COLORS = ["#00ff88", "#ff4444", "#ffaa00", "#4488ff"];
-
-  return (
-    <div className="min-h-screen bg-black text-white">
-
-      {/* Navbar */}
-      <nav className="bg-gray-900 p-4 flex justify-between">
-        <h1 className="text-2xl font-bold text-green-400">
-          SentinelX
-        </h1>
-
-       <div className="flex items-center gap-6">
-
-  <div className="bg-black border border-green-500 px-3 py-1 rounded-lg text-center">
-  <p className="text-[10px] text-gray-400">System Time</p>
-  <p className="text-green-400 font-bold text-sm">
-    {time}
-  </p>
-</div>
-
-<button
-  onClick={() => scrollToSection(dashboardRef)}
->
-  Dashboard
-</button>
-
-<button
-  onClick={() => scrollToSection(threatsRef)}
->
-  Threats
-</button>
-
-<button
-  onClick={() => scrollToSection(blockchainRef)}
->
-  Blockchain Logs
-</button>
-
-<button
-  onClick={() => scrollToSection(reportsRef)}
->
-  Reports
-</button>
-
-</div>
-      </nav>
-
-     <div
-  className="p-10"
-  ref={dashboardRef}
->
-
-        {/* Header */}
-<div className="flex justify-between items-center">
-
-  <div>
-    <h2 className="text-4xl font-bold text-green-400">
-      Cyber Threat Monitoring Dashboard
-    </h2>
-
-    <p className="mt-4 text-gray-300">
-      Real-Time AI + Blockchain Security Platform
-    </p>
-  </div>
-
-  <button
-    className="bg-green-500 text-black px-5 py-3 rounded-lg font-bold hover:bg-green-400 transition"
-  >
-    Export Security Report
-  </button>
-
-</div>
-
-        {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-10">
-
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-            <h3 className="text-gray-400">Threats Detected</h3>
-            <p className="text-3xl font-bold text-red-500">24</p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-            <h3 className="text-gray-400">Blocked Attacks</h3>
-            <p className="text-3xl font-bold text-green-500">18</p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-            <h3 className="text-gray-400">Blockchain Logs</h3>
-            <p className="text-3xl font-bold text-blue-500">120</p>
-          </div>
-
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-            <h3 className="text-gray-400">AI Risk Score</h3>
-            <p className="text-3xl font-bold text-yellow-500">82%</p>
-          </div>
-
-        </div>
-{/* Security KPI Section */}
-<div className="mt-10">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Security KPI Metrics
-  </h3>
-
-  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Detection Accuracy</h4>
-      <p className="text-3xl font-bold text-green-400">98%</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">False Positive Rate</h4>
-      <p className="text-3xl font-bold text-red-400">2%</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Response Time</h4>
-      <p className="text-3xl font-bold text-blue-400">0.8s</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Blockchain Verification</h4>
-      <p className="text-3xl font-bold text-yellow-400">99.9%</p>
-    </div>
-
-  </div>
-
-</div>
-        {/* Recent Threat Alerts */}
-        {/* Recent Threat Alerts */}
-<div
-  className="mt-12"
-  ref={threatsRef}
->
-
-          <h3 className="text-2xl font-bold text-green-400 mb-4">
-            Recent Threat Alerts
-          </h3>
-
-          <div className="bg-gray-900 rounded-xl border border-green-500 overflow-hidden">
-
-            <table className="w-full">
-
-              <thead className="bg-gray-800">
-                <tr>
-                  <th className="p-4 text-left">Threat ID</th>
-                  <th className="p-4 text-left">Type</th>
-                  <th className="p-4 text-left">Severity</th>
-                  <th className="p-4 text-left">Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">TH001</td>
-                  <td className="p-4">Phishing</td>
-                  <td className="p-4 text-red-500">High</td>
-                  <td className="p-4 text-green-500">Blocked</td>
-                </tr>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">TH002</td>
-                  <td className="p-4">Malware</td>
-                  <td className="p-4 text-yellow-500">Medium</td>
-                  <td className="p-4 text-green-500">Blocked</td>
-                </tr>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">TH003</td>
-                  <td className="p-4">DDoS Attack</td>
-                  <td className="p-4 text-red-500">Critical</td>
-                  <td className="p-4 text-green-500">Mitigated</td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-        {/* Live Threat Feed */}
-        <div className="mt-12">
-
-          <h3 className="text-2xl font-bold text-green-400 mb-4">
-            Live Threat Feed
-          </h3>
-
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-
-            <ul className="space-y-4 text-lg">
-
-              <li className="text-red-400">
-                🔴 Suspicious Login Attempt Detected
-              </li>
-
-              <li className="text-yellow-400">
-                🟡 Malware Signature Found in Email Attachment
-              </li>
-
-              <li className="text-green-400">
-                🟢 Threat Successfully Mitigated
-              </li>
-
-            </ul>
-
-          </div>
-
-        </div>
-
-        {/* AI Prediction Panel */}
-        <div className="mt-12">
-
-          <h3 className="text-2xl font-bold text-green-400 mb-4">
-            AI Threat Prediction Panel
-          </h3>
-
-          <div className="bg-gray-900 rounded-xl border border-green-500 overflow-hidden">
-
-            <table className="w-full">
-
-              <thead className="bg-gray-800">
-                <tr>
-                  <th className="p-4 text-left">Predicted Threat</th>
-                  <th className="p-4 text-left">Confidence</th>
-                  <th className="p-4 text-left">Risk Level</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">Phishing Campaign</td>
-                  <td className="p-4">92%</td>
-                  <td className="p-4 text-red-500">High</td>
-                </tr>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">Malware Infection</td>
-                  <td className="p-4">84%</td>
-                  <td className="p-4 text-yellow-500">Medium</td>
-                </tr>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">DDoS Attack</td>
-                  <td className="p-4">78%</td>
-                  <td className="p-4 text-red-500">High</td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-        {/* Blockchain Logs */}
-        {/* Blockchain Logs */}
-<div
-  className="mt-12"
-  ref={blockchainRef}
->
-
-          <h3 className="text-2xl font-bold text-green-400 mb-4">
-            Blockchain Verification Logs
-          </h3>
-
-          <div className="bg-gray-900 border border-green-500 rounded-xl overflow-hidden">
-
-            <table className="w-full">
-
-              <thead className="bg-gray-800">
-                <tr>
-                  <th className="p-4 text-left">Block ID</th>
-                  <th className="p-4 text-left">Hash</th>
-                  <th className="p-4 text-left">Status</th>
-                  <th className="p-4 text-left">Timestamp</th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">BLK001</td>
-                  <td className="p-4 text-blue-400">8f4a2c91ab5e...</td>
-                  <td className="p-4 text-green-500">Verified</td>
-                  <td className="p-4">12:01 PM</td>
-                </tr>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">BLK002</td>
-                  <td className="p-4 text-blue-400">9a5d7e32fd91...</td>
-                  <td className="p-4 text-green-500">Verified</td>
-                  <td className="p-4">12:05 PM</td>
-                </tr>
-
-                <tr className="border-t border-gray-700">
-                  <td className="p-4">BLK003</td>
-                  <td className="p-4 text-blue-400">c7f8b1a4ef22...</td>
-                  <td className="p-4 text-yellow-500">Pending</td>
-                  <td className="p-4">12:10 PM</td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-        {/* Blockchain Integrity Score */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Blockchain Integrity Score
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-10 text-center">
-
-    <p className="text-gray-400 text-lg">
-      Network Integrity Status
-    </p>
-
-    <h1 className="text-7xl font-bold text-green-400 mt-4">
-      98.7%
-    </h1>
-
-    <p className="text-green-500 mt-4 text-xl">
-      VERIFIED & SECURE
-    </p>
-
-  </div>
-
-</div>
-
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
-
-          {/* Pie Chart */}
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-            <h3 className="text-2xl font-bold text-green-400 mb-6">
-              Threat Distribution
-            </h3>
-
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value"
-                  outerRadius={100}
-                  label
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell
-                      key={index}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Bar Chart */}
-          <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-            <h3 className="text-2xl font-bold text-green-400 mb-6">
-              Weekly Attack Trend
-            </h3>
-
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="attacks" fill="#00ff88" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-        </div>
-{/* System Status Panel */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-6">
-    System Status Panel
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-6">
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-
-      <div className="bg-black p-6 rounded-lg border border-green-500 text-center">
-        <h4 className="text-gray-400">AI Engine</h4>
-        <p className="text-green-400 text-2xl font-bold mt-3">
-          ONLINE
-        </p>
-      </div>
-
-      <div className="bg-black p-6 rounded-lg border border-green-500 text-center">
-        <h4 className="text-gray-400">Blockchain Node</h4>
-        <p className="text-green-400 text-2xl font-bold mt-3">
-          ONLINE
-        </p>
-      </div>
-
-      <div className="bg-black p-6 rounded-lg border border-green-500 text-center">
-        <h4 className="text-gray-400">Threat Scanner</h4>
-        <p className="text-yellow-400 text-2xl font-bold mt-3">
-          ACTIVE
-        </p>
-      </div>
-
-      <div className="bg-black p-6 rounded-lg border border-green-500 text-center">
-        <h4 className="text-gray-400">Database</h4>
-        <p className="text-blue-400 text-2xl font-bold mt-3">
-          HEALTHY
-        </p>
-      </div>
-
-      <div className="bg-black p-6 rounded-lg border border-green-500 text-center">
-        <h4 className="text-gray-400">API Gateway</h4>
-        <p className="text-green-400 text-2xl font-bold mt-3">
-          SECURE
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-{/* Threat Severity Analytics */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-6">
-    Threat Severity Analytics
-  </h3>
-
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-red-500">
-      <h4 className="text-gray-400">
-        Critical Threats
-      </h4>
-
-      <p className="text-5xl font-bold text-red-500 mt-4">
-        8
-      </p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-orange-500">
-      <h4 className="text-gray-400">
-        High Threats
-      </h4>
-
-      <p className="text-5xl font-bold text-orange-500 mt-4">
-        15
-      </p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-yellow-500">
-      <h4 className="text-gray-400">
-        Medium Threats
-      </h4>
-
-      <p className="text-5xl font-bold text-yellow-400 mt-4">
-        22
-      </p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">
-        Low Threats
-      </h4>
-
-      <p className="text-5xl font-bold text-green-400 mt-4">
-        35
-      </p>
-    </div>
-
-  </div>
-
-</div>
-
-{/* Threat Source Countries */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Threat Source Countries
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl overflow-hidden">
-
-    <table className="w-full">
-
-      <thead className="bg-gray-800">
-        <tr>
-          <th className="p-4 text-left">Country</th>
-          <th className="p-4 text-left">Detected Attacks</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4">India</td>
-          <td className="p-4 text-green-400">45</td>
-        </tr>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4">China</td>
-          <td className="p-4 text-red-400">32</td>
-        </tr>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4">Russia</td>
-          <td className="p-4 text-orange-400">28</td>
-        </tr>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4">USA</td>
-          <td className="p-4 text-blue-400">15</td>
-        </tr>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4">Germany</td>
-          <td className="p-4 text-yellow-400">8</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-{/* Attack Origin Heat Map */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Global Threat Origins
-  </h3>
-
-  <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <p className="text-4xl">🇮🇳</p>
-      <h4 className="mt-2">India</h4>
-      <p className="text-green-400 text-2xl font-bold">45</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-red-500">
-      <p className="text-4xl">🇨🇳</p>
-      <h4 className="mt-2">China</h4>
-      <p className="text-red-400 text-2xl font-bold">32</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-orange-500">
-      <p className="text-4xl">🇷🇺</p>
-      <h4 className="mt-2">Russia</h4>
-      <p className="text-orange-400 text-2xl font-bold">28</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-blue-500">
-      <p className="text-4xl">🇺🇸</p>
-      <h4 className="mt-2">USA</h4>
-      <p className="text-blue-400 text-2xl font-bold">15</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-yellow-500">
-      <p className="text-4xl">🇩🇪</p>
-      <h4 className="mt-2">Germany</h4>
-      <p className="text-yellow-400 text-2xl font-bold">8</p>
-    </div>
-
-  </div>
-
-</div>
-
-{/* User Access Monitoring */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    User Access Monitoring
-  </h3>
-
-  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Active Users</h4>
-      <p className="text-3xl font-bold text-green-400">156</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Admin Accounts</h4>
-      <p className="text-3xl font-bold text-blue-400">8</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Failed Logins</h4>
-      <p className="text-3xl font-bold text-red-400">14</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Locked Accounts</h4>
-      <p className="text-3xl font-bold text-yellow-400">3</p>
-    </div>
-
-  </div>
-
-</div>
-{/* Compliance Monitoring */}
-{/* Compliance Monitoring */}
-<div
-  className="mt-12"
-  ref={reportsRef}
->
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Compliance Monitoring
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-6">
-
-    <ul className="space-y-4 text-xl">
-
-      <li className="text-green-400">
-        ✅ GDPR Compliance - PASS
-      </li>
-
-      <li className="text-green-400">
-        ✅ ISO 27001 - PASS
-      </li>
-
-      <li className="text-green-400">
-        ✅ NIST Framework - PASS
-      </li>
-
-      <li className="text-green-400">
-        ✅ Data Encryption - ENABLED
-      </li>
-
-    </ul>
-
-  </div>
-
-</div>
-{/* AI Threat Intelligence Engine */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    AI Threat Intelligence Engine
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-6">
-
-    <h4 className="text-xl text-blue-400 mb-4">
-      Latest AI Analysis
-    </h4>
-
-    <ul className="space-y-4 text-lg">
-
-      <li className="text-yellow-400">
-        ⚠ DDoS probability increased by 12%
-      </li>
-
-      <li className="text-red-400">
-        🚨 New phishing pattern detected
-      </li>
-
-      <li className="text-blue-400">
-        🔍 Blockchain transaction anomaly found
-      </li>
-
-      <li className="text-green-400">
-        ✅ Recommended immediate investigation
-      </li>
-
-    </ul>
-
-  </div>
-
-</div>
-{/* Real-Time Threat Activity Log */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Real-Time Threat Activity Log
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-6">
-
-    <div className="space-y-4">
-
-      <div className="border-l-4 border-red-500 pl-4">
-        <p className="text-red-400">
-          [15:20:05] Critical Malware Attempt Blocked
-        </p>
-      </div>
-
-      <div className="border-l-4 border-yellow-500 pl-4">
-        <p className="text-yellow-400">
-          [15:18:11] Suspicious Login Detected
-        </p>
-      </div>
-
-      <div className="border-l-4 border-blue-500 pl-4">
-        <p className="text-blue-400">
-          [15:16:52] Blockchain Record Verified
-        </p>
-      </div>
-
-      <div className="border-l-4 border-green-500 pl-4">
-        <p className="text-green-400">
-          [15:15:30] AI Engine Completed Threat Analysis
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-{/* SOC Overview */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Security Operations Center Overview
-  </h3>
-
-  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Incidents Today</h4>
-      <p className="text-3xl font-bold text-red-400">48</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Resolved</h4>
-      <p className="text-3xl font-bold text-green-400">39</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Investigating</h4>
-      <p className="text-3xl font-bold text-yellow-400">7</p>
-    </div>
-
-    <div className="bg-gray-900 p-6 rounded-xl border border-green-500">
-      <h4 className="text-gray-400">Escalated</h4>
-      <p className="text-3xl font-bold text-blue-400">2</p>
-    </div>
-
-  </div>
-
-</div>
-{/* Threat Priority Queue */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Threat Priority Queue
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl overflow-hidden">
-
-    <table className="w-full">
-
-      <thead className="bg-gray-800">
-        <tr>
-          <th className="p-4 text-left">Priority</th>
-          <th className="p-4 text-left">Threat</th>
-          <th className="p-4 text-left">Assigned Team</th>
-          <th className="p-4 text-left">Status</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4 text-red-500">P1</td>
-          <td className="p-4">DDoS Attack</td>
-          <td className="p-4">Network Team</td>
-          <td className="p-4 text-yellow-400">Investigating</td>
-        </tr>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4 text-orange-400">P2</td>
-          <td className="p-4">Phishing Campaign</td>
-          <td className="p-4">SOC Team</td>
-          <td className="p-4 text-green-400">Contained</td>
-        </tr>
-
-        <tr className="border-t border-gray-700">
-          <td className="p-4 text-yellow-400">P3</td>
-          <td className="p-4">Malware Activity</td>
-          <td className="p-4">Endpoint Team</td>
-          <td className="p-4 text-blue-400">Monitoring</td>
-        </tr>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-{/* Security Score Gauge */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    Overall Security Rating
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-10 text-center">
-
-    <p className="text-gray-400 text-xl">
-      Security Score
-    </p>
-
-    <h1 className="text-8xl font-bold text-green-400 mt-4">
-      A+
-    </h1>
-
-    <p className="text-3xl text-blue-400 mt-4">
-      92 / 100
-    </p>
-
-    <p className="text-green-300 mt-4">
-      Excellent Security Posture
-    </p>
-
-  </div>
-
-</div>
-{/* AI Security Recommendations */}
-<div className="mt-12">
-
-  <h3 className="text-2xl font-bold text-green-400 mb-4">
-    AI Security Recommendations
-  </h3>
-
-  <div className="bg-gray-900 border border-green-500 rounded-xl p-6">
-
-    <ul className="space-y-4 text-lg">
-
-      <li className="text-red-400">
-        🚨 Block IP 192.168.1.45 due to repeated login failures
-      </li>
-
-      <li className="text-yellow-400">
-        ⚠ Enable Multi-Factor Authentication for 12 users
-      </li>
-
-      <li className="text-blue-400">
-        🔍 Investigate suspicious blockchain transaction BLK003
-      </li>
-
-      <li className="text-green-400">
-        ✅ System integrity verified successfully
-      </li>
-
-    </ul>
-
-  </div>
-
-</div>
-      </div>
-    </div>
-
-    
-  );
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Threats from "./pages/Threats";
+import Blockchain from "./pages/Blockchain";
+import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
+import EmployeePortal from "./pages/EmployeePortal";
+import Rules from "./pages/Rules";
+import SOAR from "./pages/SOAR";
+import UBA from "./pages/UBA";
+import IncidentPlaybooks from "./pages/IncidentPlaybooks";
+import Analytics from "./pages/Analytics";
+import ApiSettings from "./pages/ApiSettings";
+import RetentionSettings from "./pages/RetentionSettings";
+
+function ProtectedRoute({ children, allowedRoles, userRole }) {
+  if (!allowedRoles.includes(userRole)) {
+    return <Navigate to={userRole === "employee" ? "/report-incident" : "/"} replace />;
+  }
+  return children;
 }
 
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState("");
 
-export default App;
+  const [threats, setThreats] = useState([
+    {
+      id: "TH001",
+      type: "Phishing",
+      severity: "High",
+      status: "Blocked",
+      time: "12:01 PM",
+      ip: "192.168.1.102",
+      affected: "Mail Server",
+      description: "Multiple inbound emails containing zero-day phishing link payloads targeting human resource personnel.",
+      remediation: "Spam filter updated, credentials reset for targeted users, host domain blacklisted.",
+    },
+    {
+      id: "TH002",
+      type: "Malware",
+      severity: "Medium",
+      status: "Blocked",
+      time: "12:05 PM",
+      ip: "10.0.0.15",
+      affected: "Financial Workstation",
+      description: "Trojan infection attempt intercepted by active endpoint protection scanner during attachment download.",
+      remediation: "Device quarantined, antivirus scan completed, infected files purged.",
+    },
+    {
+      id: "TH003",
+      type: "DDoS Attack",
+      severity: "Critical",
+      status: "Mitigated",
+      time: "12:10 PM",
+      ip: "185.220.101.5",
+      affected: "API Gateway",
+      description: "High-volume UDP flood targeting API authentication servers, causing momentary latency spikes.",
+      remediation: "Dynamic rate limiting activated, traffic routed through CDN protection shield, server load normalized.",
+    },
+  ]);
+
+  const [selectedThreat, setSelectedThreat] = useState(null);
+  const [globalSearch, setGlobalSearch] = useState("");
+  const [threatSearch, setThreatSearch] = useState("");
+  const [blockchainSearch, setBlockchainSearch] = useState("");
+
+  useEffect(() => {
+    setThreatSearch(globalSearch);
+    setBlockchainSearch(globalSearch);
+  }, [globalSearch]);
+
+  const [notifications, setNotifications] = useState([
+    { id: 1, type: "critical", message: "Critical Malware Attempt Blocked", time: "15:20:05", read: false },
+    { id: 2, type: "high", message: "Suspicious Login Detected", time: "15:18:11", read: false },
+    { id: 3, type: "medium", message: "DDoS probability increased by 12%", time: "15:05:00", read: false },
+    { id: 4, type: "info", message: "Blockchain Record Verified", time: "14:48:22", read: true },
+    { id: 5, type: "info", message: "AI Engine Completed Threat Analysis", time: "14:30:15", read: true },
+  ]);
+
+  useEffect(() => {
+    if (!isAuthenticated || !accessToken) return;
+
+    const fetchLiveAlerts = async () => {
+      try {
+        const response = await fetch("/api/events/alerts", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        const data = await response.json();
+        if (data.success && data.alerts && data.alerts.length > 0) {
+          const formatted = data.alerts.map((a) => ({
+            id: a.threatId,
+            eventId: a.eventId,
+            type: a.type,
+            severity: a.severity,
+            status: a.status,
+            time: new Date(a.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            ip: a.ip,
+            affected: a.affected,
+            description: a.description,
+            remediation: a.remediation
+          }));
+          setThreats(formatted);
+        }
+      } catch (err) {
+        console.warn("REST API server offline. Using fallback simulation data.");
+      }
+    };
+
+    fetchLiveAlerts();
+    const interval = setInterval(fetchLiveAlerts, 4000);
+    return () => clearInterval(interval);
+  }, [isAuthenticated, accessToken]);
+
+  const handleLogin = (userData) => {
+    setIsAuthenticated(true);
+    setUser(userData);
+    setAccessToken(userData.accessToken);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    setAccessToken("");
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Router>
+    );
+  }
+
+  return (
+    <Router>
+      <div className="min-h-screen bg-slate-50 flex flex-col font-sans transition-colors duration-200">
+        
+        <Navbar
+          user={user}
+          onLogout={handleLogout}
+          globalSearch={globalSearch}
+          setGlobalSearch={setGlobalSearch}
+          notifications={notifications}
+          setNotifications={setNotifications}
+        />
+
+        <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Routes>
+            
+            <Route
+              path="/"
+              element={
+                user.role === "employee" ? (
+                  <Navigate to="/report-incident" replace />
+                ) : (
+                  <Dashboard user={user} accessToken={accessToken} globalSearch={globalSearch} />
+                )
+              }
+            />
+
+            <Route
+              path="/threats"
+              element={
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
+                  <Threats
+                    threats={threats}
+                    selectedThreat={selectedThreat}
+                    setSelectedThreat={setSelectedThreat}
+                    threatSearch={threatSearch}
+                    setThreatSearch={setThreatSearch}
+                    accessToken={accessToken}
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
+                  <Analytics accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/uba"
+              element={
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
+                  <UBA accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/playbook-guides"
+              element={
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
+                  <IncidentPlaybooks accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/rules"
+              element={
+                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                  <Rules accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/soar"
+              element={
+                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                  <SOAR accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/api-settings"
+              element={
+                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                  <ApiSettings accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/retention"
+              element={
+                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                  <RetentionSettings accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/blockchain"
+              element={
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
+                  <Blockchain
+                    blockchainSearch={blockchainSearch}
+                    setBlockchainSearch={setBlockchainSearch}
+                    accessToken={accessToken}
+                  />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/reports"
+              element={
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
+                  <Reports threats={threats} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                  <Settings user={user} accessToken={accessToken} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/report-incident"
+              element={
+                <ProtectedRoute allowedRoles={["employee"]} userRole={user.role}>
+                  <EmployeePortal user={user} />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+
+          </Routes>
+        </main>
+
+        <Footer />
+
+      </div>
+    </Router>
+  );
+}
