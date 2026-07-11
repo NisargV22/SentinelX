@@ -216,7 +216,7 @@ export default function App() {
             <Route
               path="/rules"
               element={
-                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
                   <Rules accessToken={accessToken} />
                 </ProtectedRoute>
               }
@@ -225,7 +225,7 @@ export default function App() {
             <Route
               path="/soar"
               element={
-                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
                   <SOAR accessToken={accessToken} />
                 </ProtectedRoute>
               }
@@ -234,7 +234,7 @@ export default function App() {
             <Route
               path="/api-settings"
               element={
-                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
                   <ApiSettings accessToken={accessToken} />
                 </ProtectedRoute>
               }
@@ -243,7 +243,7 @@ export default function App() {
             <Route
               path="/retention"
               element={
-                <ProtectedRoute allowedRoles={["soc"]} userRole={user.role}>
+                <ProtectedRoute allowedRoles={["soc", "admin"]} userRole={user.role}>
                   <RetentionSettings accessToken={accessToken} />
                 </ProtectedRoute>
               }
