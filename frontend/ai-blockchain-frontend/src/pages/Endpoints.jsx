@@ -25,7 +25,7 @@ import random
 # Configuration
 LOG_FILE_PATH = r"C:\\logs\\network.log" if "${os}" == "Windows" else "/var/log/network.log"
 SENTINELX_API_URL = "https://sentinelx-ai-hkp8.onrender.com/api/events"
-AGENT_ID = f"${os.lower()}-endpoint-{random.randint(100,999)}"
+AGENT_ID = f"${os.toLowerCase()}-endpoint-{random.randint(100,999)}"
 
 def parse_log_line(line):
     # Basic parser assuming line is like: "192.168.1.5:443 -> 10.0.0.1:22 brute_force"
