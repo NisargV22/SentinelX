@@ -19,7 +19,80 @@ export default function Endpoints({ accessToken }) {
       setDownloadSuccess(os);
       
       // Trigger actual file download
-      const content = `# SentinelX Forwarder Agent for ${os}\n# This is a generated payload.\n\nprint("SentinelX Agent Running...")`;
+      const content = `# SentinelX Forwarder Agent for ${os}
+import time
+import json
+import urllib.request
+import os
+import random
+
+# Configuration
+LOG_FILE_PATH = r"C:\\logs\\network.log" if "${os}" == "Windows" else "/var/log/network.log"
+SENTINELX_API_URL = "https://sentinelx-ai-hkp8.onrender.com/api/events"
+AGENT_ID = f"${os.lower()}-endpoint-{random.randint(100,999)}"
+
+def parse_log_line(line):
+    # Basic parser assuming line is like: "192.168.1.5:443 -> 10.0.0.1:22 brute_force"
+    try:
+        parts = line.strip().split(" ")
+        src_ip = parts[0].split(":")[0] if len(parts) > 0 else "192.168.1.100"
+        dest_ip = parts[2].split(":")[0] if len(parts) > 2 else "10.0.0.1"
+        event_type = parts[3] if len(parts) > 3 else "unauthorized_access"
+        return {
+            "type": event_type,
+            "protocol": "TCP",
+            "srcPort": random.randint(1024, 65535),
+            "destPort": random.randint(22, 443),
+            "bytes": random.randint(100, 5000),
+            "duration": random.randint(1, 10),
+            "requestCount": 1,
+            "sourceIP": src_ip,
+            "destIP": dest_ip
+        }
+    except Exception:
+        return {
+            "type": "unauthorized_access",
+            "protocol": "TCP",
+            "srcPort": 55555,
+            "destPort": 22,
+            "bytes": 500,
+            "duration": 2,
+            "requestCount": 1,
+            "sourceIP": "192.168.1.5",
+            "destIP": "10.0.0.15"
+        }
+
+def start_forwarding():
+    print(f"[*] Starting SentinelX Agent ({AGENT_ID})\\n[*] Monitoring {LOG_FILE_PATH}...")
+    
+    # Ensure file exists
+    os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
+    if not os.path.exists(LOG_FILE_PATH):
+        with open(LOG_FILE_PATH, 'w') as f:
+            f.write("")
+
+    with open(LOG_FILE_PATH, 'r') as file:
+        file.seek(0, os.SEEK_END)
+        while True:
+            line = file.readline()
+            if not line:
+                time.sleep(1)
+                continue
+            
+            payload = parse_log_line(line)
+            data = json.dumps(payload).encode('utf-8')
+            req = urllib.request.Request(SENTINELX_API_URL, data=data, headers={'Content-Type': 'application/json', 'x-agent-id': AGENT_ID})
+            
+            try:
+                with urllib.request.urlopen(req, timeout=5) as response:
+                    if response.status in [200, 201]:
+                        print(f"[+] Forwarded event: {payload['type']} from {payload['sourceIP']}")
+            except Exception as e:
+                print(f"[-] Forwarding failed: {e}")
+
+if __name__ == "__main__":
+    start_forwarding()
+`;
       const blob = new Blob([content], { type: 'text/plain' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
