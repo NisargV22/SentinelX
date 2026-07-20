@@ -1,119 +1,120 @@
-# SentinelX: Next-Generation SIEM & Cybersecurity Platform
+<div align="center">
 
-## Overview
-**SentinelX** is an advanced Security Information and Event Management (SIEM) platform that converges Artificial Intelligence (AI) and Blockchain technology to provide unparalleled threat detection, log immutability, and compliance auditing. 
+# 🛡️ SentinelX: Next-Generation SIEM & Cybersecurity Platform
 
-Unlike traditional SIEMs where logs can be tampered with by malicious actors who gain root access, SentinelX cryptographically anchors log batches to a simulated blockchain ledger, ensuring absolute data integrity. Additionally, a built-in Machine Learning telemetry engine analyzes network payloads, grading them on a threat score to alert Security Operations Center (SOC) analysts to malicious or suspicious activity in real time.
+[![React](https://img.shields.io/badge/React-18.0-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20.0-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
 
----
+*An advanced Security Information and Event Management (SIEM) architecture converging Artificial Intelligence with Blockchain Immutability.*
 
-## Key Architectural Pillars
+</div>
 
-### 1. AI-Driven Threat Analytics
-- **Machine Learning Engine**: Parses incoming network requests, evaluating payloads for known attack vectors (e.g., SQL Injection, Cross-Site Scripting, Directory Traversal, Command Injection).
-- **Threat Scoring**: Every incoming log is assigned a confidence score between 0% and 100%. 
-  - `> 70%`: Malicious (Critical/High Severity Alert generated)
-  - `35% - 70%`: Suspicious (Medium/Low Severity Alert generated)
-  - `< 35%`: Benign / Safe
-- **Automated Alerting**: Threats automatically trigger alerts that populate the SOC analyst dashboard for immediate triage (Acknowledge / Mark as False Positive).
+<br/>
 
-### 2. Blockchain Immutability Ledger
-- **Cryptographic Anchoring**: Log entries are batched and hashed using SHA-256. These hashes are anchored into a blockchain ledger.
-- **Tamper Detection**: If a malicious actor compromises the core MongoDB database and attempts to delete or alter logs to cover their tracks, SentinelX will immediately detect the cryptographic mismatch between the database and the immutable ledger.
-- **Auto-Alerting**: Triggers a massive `Critical` system alert ("Security Alteration Detected") upon detecting database tampering.
+## 📖 Overview
 
-### 3. Comprehensive Dashboard & UI/UX
-- **Glassmorphism Design**: Features a highly aesthetic, modern UI using Tailwind CSS with glassmorphism effects, dynamic gradients, and smooth micro-animations.
-- **Role-Based Access Control (RBAC)**: 
-  - `Admin`: Full access to all modules including User Management.
-  - `SOC Analyst`: Access to dashboards, threat intel, and SOAR capabilities.
-  - `Employee`: Limited access to the Incident Reporting Portal.
-- **Live Event Console**: Real-time structured log viewing with dynamic filtering (by Malicious, Suspicious, Web Services).
+**SentinelX** is a state-of-the-art enterprise cybersecurity platform built to detect, analyze, and permanently record network threats. 
+
+Traditional SIEMs rely on centralized databases that can be compromised if an attacker gains root access, allowing them to delete logs and cover their tracks. SentinelX solves this critical vulnerability by **cryptographically anchoring** batched audit logs into a simulated blockchain ledger. Furthermore, a built-in **Machine Learning Telemetry Engine** analyzes incoming network payloads to grade them on a heuristic threat scale, delivering real-time actionable intelligence to SOC (Security Operations Center) analysts.
 
 ---
 
-## Core Features & Modules
+## 🚀 Key Architectural Innovations
 
-### 🔹 Log Console & Dashboard (`/`)
-The central nervous system for SOC analysts.
-- Real-time SIEM event streaming.
-- Key Performance Indicators (KPIs) showing ingestion rates, active threats, and blocked attacks.
-- Server health monitoring (Log DB, AI Engine, Blockchain Anchor).
-- Quick Action controls (Acknowledge all alerts).
+### 🧠 1. AI-Driven Threat Analytics
+- **Telemetry Engine:** Parses incoming HTTP/TCP requests and evaluates JSON payloads for known OWASP attack vectors (e.g., SQL Injection, Cross-Site Scripting, Directory Traversal, Command Injection).
+- **Heuristic Threat Scoring:** Every ingested log is assigned a confidence score:
+  - 🔴 `> 70%`: **Malicious** (Critical/High Severity Alert)
+  - 🟠 `35% - 70%`: **Suspicious** (Medium/Low Severity Alert)
+  - 🟢 `< 35%`: **Benign / Safe**
+- **Automated Triage:** Threats automatically trigger active alerts populating the SOC dashboard for immediate triage and remediation workflow.
 
-### 🔹 Threat Intelligence (`/threats`)
-A dedicated portal for dissecting identified attacks.
-- View Raw JSON payloads of malicious requests.
-- Maps attacks to OWASP Top 10 categories.
-- Provides actionable remediation steps.
+### ⛓️ 2. Blockchain Immutability Ledger
+- **Cryptographic Anchoring:** System audit logs are periodically batched, serialized, and hashed using SHA-256. These immutable hash signatures are pushed into an append-only blockchain ledger.
+- **Tamper Detection Protocol:** If a malicious actor compromises the underlying database and modifies historical logs to cover their tracks, SentinelX will instantly detect the cryptographic mismatch.
+- **Auto-Alerting:** The system triggers a massive `Critical` Alert—**"Security Alteration Detected"**—upon identifying database tampering.
 
-### 🔹 Analytics & UBA (`/analytics`, `/uba`)
-- Visual charts and graphs representing threat vectors over time.
-- User Behavior Analytics (UBA) to track anomalous employee behavior, insider threats, or compromised credentials.
-
-### 🔹 Ledger Auditing (`/blockchain`)
-- The UI interface for the Blockchain immutability layer.
-- View cryptographically sealed blocks, their timestamps, and hash signatures.
-- Re-verify ledger integrity on demand.
-
-### 🔹 SOAR & Playbooks (`/soar`, `/playbook-guides`)
-- **SOAR (Security Orchestration, Automation, and Response)**: Execute automated scripts in response to threats (e.g., auto-ban IPs, isolate infected nodes).
-- **Playbooks**: Step-by-step incident response guides for junior analysts to follow during major breaches (e.g., Ransomware outbreak, DDoS).
-
-### 🔹 Detection Rules & API Settings (`/rules`, `/api-settings`)
-- Dynamically tune the AI engine and OWASP detection parameters.
-- Manage API keys and webhooks for integrating SentinelX with third-party tools like Slack, Jira, or AWS CloudWatch.
-
-### 🔹 Incident Portal (`/report-incident`)
-- A secure portal for non-security employees to report phishing emails, lost devices, or suspicious network activity to the SOC team.
+### 🎨 3. Enterprise UI/UX & Dashboard
+- **Glassmorphism Aesthetics:** A stunning, highly responsive UI powered by Tailwind CSS featuring glassmorphism overlays, dynamic gradients, and fluid micro-animations.
+- **Live Event Console:** Real-time structured log viewing with dynamic categorization (Malicious, Suspicious, Web Services, Network).
 
 ---
 
-## Technical Stack
+## 🔒 Security Enhancements & Best Practices
 
-### Frontend (Client-Side)
-- **Framework**: React.js (Vite)
-- **Styling**: Tailwind CSS (Native Vanilla CSS integrations for complex glassmorphism)
-- **Routing**: React Router DOM
-- **Deployment**: Vercel
-
-### Backend (Server-Side)
-- **Runtime**: Node.js & Express.js
-- **Database**: MongoDB (Mongoose ODM)
-- **Security Middleware**: Helmet.js, CORS restrictions, custom recursive NoSQL injection sanitizers.
-- **Proxy Trust**: Configured to trust load balancers/proxies (like Render/Vercel) to extract true client `X-Forwarded-For` IPs.
-- **Deployment**: Render
-
-### Security Enhancements Implemented
-- **Session Protection**: Uses `sessionStorage` (instead of `localStorage`) to isolate authentication tokens per tab, heavily mitigating Cross-Site Scripting (XSS) payload exfiltration.
-- **Inactivity Timeouts**: Auto-logout implemented after 30 minutes of idle time to prevent session hijacking on unattended workstations.
-- **Asset Preloading**: Aggressive `<link rel="preload">` directives for massive image assets to prevent layout shifting and ensure instant visual rendering.
+- **Role-Based Access Control (RBAC):** Strict isolation between `Admin`, `SOC Analyst`, and `Employee` user roles.
+- **Advanced Session Protection:** Employs `sessionStorage` (instead of `localStorage`) to bind JWT tokens securely to a single browser tab, heavily mitigating Cross-Site Scripting (XSS) payload exfiltration.
+- **Inactivity Timeouts:** Auto-logout monitor terminates active sessions after 30 minutes of idle time to prevent physical session hijacking.
+- **Recursive NoSQL Sanitization:** Custom backend middleware recursively strips `$` and `.` operators from deeply nested JSON payloads to block complex NoSQL Injection attacks.
+- **True Client IP Tracking:** Configured `trust proxy` policies to accurately extract `X-Forwarded-For` IPs behind Vercel/Render load balancers.
 
 ---
 
-## Setup & Local Development Workflow
+## 🧩 Core Modules
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/NisargV22/SentinelX.git
-   cd AI-Blockchain-Cybersecurity-System
-   ```
+| Module | Route | Description |
+|--------|-------|-------------|
+| **Log Console** | `/` | The central nervous system for SOC analysts showing live SIEM event streams and KPI metrics. |
+| **Threat Intel** | `/threats` | A dedicated portal dissecting identified attacks, mapping to OWASP, and providing remediation. |
+| **Analytics & UBA** | `/analytics`, `/uba` | Visual charting representing threat vectors over time and User Behavior Analytics (UBA). |
+| **Ledger Auditing** | `/blockchain` | Interface to view cryptographically sealed blocks, timestamps, and re-verify ledger integrity. |
+| **SOAR Actions** | `/soar` | Security Orchestration, Automation, and Response actions for automated threat mitigation. |
+| **Playbooks** | `/playbook-guides` | Step-by-step incident response manuals for junior analysts (e.g., Ransomware, DDoS). |
+| **Detection Rules** | `/rules` | Configuration interface to dynamically tune AI engine sensitivities and OWASP parameters. |
 
-2. **Backend Setup**
-   ```bash
-   cd backend
-   npm install
-   # Create a .env file with MONGO_URI and JWT_SECRET
-   npm run dev
-   ```
+---
 
-3. **Frontend Setup**
-   ```bash
-   cd frontend/ai-blockchain-frontend
-   npm install
-   # Ensure vite.config.js points to the backend (e.g., localhost:4000 for local proxy)
-   npm run dev
-   ```
+## 🛠️ Technology Stack
 
-4. **Simulating Threats**
-   - The platform includes testing endpoints to simulate attacks (SQLi, XSS) to watch the AI engine flag them in real-time on the dashboard.
+**Frontend Architecture:**
+- React.js (Vite Toolchain)
+- Tailwind CSS
+- React Router DOM
+- *Deployed on Vercel*
+
+**Backend Architecture:**
+- Node.js & Express.js
+- MongoDB & Mongoose ODM
+- Helmet.js (HTTP Security Headers)
+- CORS Middleware Configuration
+- *Deployed on Render*
+
+---
+
+## 💻 Local Development Setup
+
+Follow these steps to deploy SentinelX in your local environment.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/NisargV22/SentinelX.git
+cd SentinelX
+```
+
+### 2. Backend Initialization
+```bash
+cd backend
+npm install
+```
+*Create a `.env` file in the `/backend` directory containing your `MONGO_URI` and `JWT_SECRET`.*
+```bash
+npm run dev
+```
+
+### 3. Frontend Initialization
+```bash
+cd ../frontend/ai-blockchain-frontend
+npm install
+npm run dev
+```
+*Navigate to `http://localhost:5173` to access the portal.*
+
+---
+
+<div align="center">
+  <b>Built for the Future of Enterprise Cyber Defense.</b><br/>
+  &copy; 2026 SentinelX Systems
+</div>
